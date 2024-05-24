@@ -1,8 +1,8 @@
-use std::collections::HashMap;
 use std::fmt::{self, Formatter};
 
 use reqwest::Error;
 use serde::Deserialize;
+use serde_json::Map;
 
 #[derive(Clone)]
 pub struct GraphQLError {
@@ -16,7 +16,7 @@ pub struct GraphQLError {
 pub struct GraphQLErrorMessage {
   message: String,
   locations: Option<Vec<GraphQLErrorLocation>>,
-  extensions: Option<HashMap<String, String>>,
+  extensions: Option<Map<String, serde_json::Value>>,
   path: Option<Vec<GraphQLErrorPathParam>>,
 }
 
