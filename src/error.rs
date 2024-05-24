@@ -35,6 +35,14 @@ pub enum GraphQLErrorPathParam {
 }
 
 impl GraphQLError {
+  /// Check if the provided error message is equal to one of the error messages
+  pub fn contains_error_message(&self, message: &str) -> bool {
+    self.json.as_ref().is_some_and(|errors| {
+      errors.iter().any(|err| err.message == message)
+    })
+  }
+
+
   pub fn with_text(message: impl AsRef<str>) -> Self {
     Self {
       message: message.as_ref().to_string(),
