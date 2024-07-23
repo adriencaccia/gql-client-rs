@@ -42,6 +42,17 @@ impl GraphQLError {
     })
   }
 
+  /// Check if the provided error code is equal to one of the error codes
+  pub fn contains_error_code(&self, code: &str) -> bool {
+    self.json.as_ref().is_some_and(|errors| {
+      errors.iter().any(|err| {
+        err.extensions.as_ref().is_some_and(|ext| {
+          ext.get("code").is_some_and(|val| val.as_str().unwrap_or_default() == code)
+        })
+      })
+    })
+  }
+
 
   pub fn with_text(message: impl AsRef<str>) -> Self {
     Self {
